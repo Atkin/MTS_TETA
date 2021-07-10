@@ -18,9 +18,9 @@
         <ImageView
             android:id="@+id/movie_main_image"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="400dp"
+            android:scaleType="centerCrop"
             android:background="@mipmap/image_movie_main_horizontal"
-            android:scaleType="fitStart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
