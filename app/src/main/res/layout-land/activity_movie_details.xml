@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <!-- Main Image CardView -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Main Image -->
+        <ImageView
+            android:id="@+id/movie_main_image"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@mipmap/image_movie_main_horizontal"
+            android:scaleType="fitStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.cardview.widget.CardView>
+
+    <HorizontalScrollView
+        android:id="@+id/movie_card_scrollview_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="220dp"
+        android:layout_marginEnd="50dp"
+        android:elevation="2dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Movie card frame-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/movie_card_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/image_movie_card_frame_horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- Movie genre frame -->
+            <ImageView
+                android:id="@+id/movie_genre_frame"
+                android:layout_width="58dp"
+                android:layout_height="17dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="30dp"
+                android:background="@mipmap/ic_movie_genre_frame"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Movie genre text -->
+            <TextView
+                android:id="@+id/movie_genre_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="27dp"
+                android:layout_marginTop="30dp"
+                android:text="@string/movie_genre_text"
+                android:textAppearance="@style/movie_genre_style"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Movie date -->
+            <TextView
+                android:id="@+id/movie_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="30dp"
+                android:text="@string/movie_date"
+                android:textAppearance="@style/movie_date_style"
+                app:layout_constraintStart_toEndOf="@+id/movie_genre_frame"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Age limit frame -->
+            <ImageView
+                android:id="@+id/age_limit_frame"
+                android:layout_width="41.4dp"
+                android:layout_height="41.2dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:background="@mipmap/ic_age_limit_frame"
+                app:layout_constraintStart_toEndOf="@+id/movie_date"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Age limit text -->
+            <TextView
+                android:id="@+id/age_limit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="22dp"
+                android:layout_marginTop="30dp"
+                android:text="@string/age_limit"
+                android:textAppearance="@style/age_limit_style"
+                app:layout_constraintStart_toEndOf="@+id/movie_date"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Movie title -->
+            <TextView
+                android:id="@+id/movie_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="63dp"
+                android:text="@string/movie_title"
+                android:textAppearance="@style/movie_title_style"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Raiting star #1 -->
+            <ImageView
+                android:id="@+id/raiting_star_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="93dp"
+                android:src="@mipmap/ic_raiting_black_star"
+                app:layout_constraintEnd_toStartOf="@id/raiting_star_2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Raiting star #2 -->
+            <ImageView
+                android:id="@+id/raiting_star_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="93dp"
+                android:src="@mipmap/ic_raiting_black_star"
+                app:layout_constraintEnd_toStartOf="@id/raiting_star_3"
+                app:layout_constraintStart_toEndOf="@id/raiting_star_1"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Raiting star #3 -->
+            <ImageView
+                android:id="@+id/raiting_star_3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="93dp"
+                android:src="@mipmap/ic_raiting_black_star"
+                app:layout_constraintEnd_toStartOf="@id/raiting_star_4"
+                app:layout_constraintStart_toEndOf="@id/raiting_star_2"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Raiting star #4 -->
+            <ImageView
+                android:id="@+id/raiting_star_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="93dp"
+                android:src="@mipmap/ic_raiting_black_star"
+                app:layout_constraintEnd_toStartOf="@id/raiting_star_5"
+                app:layout_constraintStart_toEndOf="@id/raiting_star_3"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Raiting star #5 -->
+            <ImageView
+                android:id="@+id/raiting_star_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:layout_marginTop="93dp"
+                android:src="@mipmap/ic_raiting_white_star"
+                app:layout_constraintStart_toEndOf="@id/raiting_star_4"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Movie description -->
+            <TextView
+                android:id="@+id/movie_description"
+                android:layout_width="350dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="128dp"
+                android:layout_marginEnd="30dp"
+                android:scrollbars="vertical"
+                android:text="@string/movie_description"
+                android:textAppearance="@style/movie_description_style"
+                app:layout_constraintEnd_toStartOf="@id/actor_scrollview_horizontal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Actors title-->
+            <TextView
+                android:id="@+id/actors_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
+                android:text="@string/actors_title"
+                android:textAppearance="@style/actors_title_text_style"
+                app:layout_constraintEnd_toStartOf="@id/actor_scrollview_horizontal"
+                app:layout_constraintStart_toEndOf="@id/age_limit_frame"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!-- Actor frame ScrollView-->
+            <ScrollView
+                android:id="@+id/actor_scrollview_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <!-- Actor frame -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/actor_frame"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <!-- Actors photo #1-->
+                    <ImageView
+                        android:id="@+id/actor_photo_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@mipmap/image_actor_photo_1"
+                        app:layout_constraintBottom_toTopOf="@id/actor_name_1"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <!-- Actors name #1 -->
+                    <TextView
+                        android:id="@+id/actor_name_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="8dp"
+                        android:text="@string/actors_name_1"
+                        android:textAppearance="@style/actor_name"
+                        app:layout_constraintBottom_toTopOf="@id/actor_photo_2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/actor_photo_1" />
+
+                    <!-- Actors photo #2-->
+                    <ImageView
+                        android:id="@+id/actor_photo_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:background="@mipmap/image_actor_photo_2"
+                        app:layout_constraintBottom_toTopOf="@id/actor_name_2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/actor_name_1" />
+
+                    <!-- Actors name #2 -->
+                    <TextView
+                        android:id="@+id/actor_name_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/actors_name_1"
+                        android:textAppearance="@style/actor_name"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/actor_photo_2" />
+
+                    <!-- Actors photo #3-->
+                    <ImageView
+                        android:id="@+id/actor_photo_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:background="@mipmap/image_actor_photo_2"
+                        app:layout_constraintBottom_toTopOf="@id/actor_name_3"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/actor_name_2" />
+
+                    <!-- Actors name #3 -->
+                    <TextView
+                        android:id="@+id/actor_name_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/actors_name_1"
+                        android:textAppearance="@style/actor_name"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/actor_photo_3" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </ScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </HorizontalScrollView>
+
+    <!-- Button home -->
+    <ImageButton
+        android:id="@+id/button_home"
+        android:layout_width="48dp"
+        android:layout_height="0dp"
+        android:background="@drawable/ic_home_button_horizontal"
+
+        app:layout_constraintBottom_toTopOf="@id/button_account"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Account button -->
+    <ImageButton
+        android:id="@+id/button_account"
+        android:layout_width="48dp"
+        android:layout_height="0dp"
+        android:background="@color/white"
+        android:src="@mipmap/ic_button_account"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/button_home" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
