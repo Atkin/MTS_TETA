@@ -26,7 +26,6 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.cardview.widget.CardView>
 
-
     <!-- ScrollView for Movie card frame-->
     <HorizontalScrollView
         android:id="@+id/movie_card_scrollview_horizontal"
