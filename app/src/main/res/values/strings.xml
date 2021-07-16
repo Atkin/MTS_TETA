@@ -9,4 +9,29 @@
     <string name="actors_name_1">Джейсон Стэйтем</string>
     <string name="actors_name_2">Холт Маккэллани</string>
     <string name="actors_name_3">Джош Хартнетт</string>
+
+
+    <string name="main_rating_text">Рейтинг: %1$d</string>
+    <string name="main_age_restriction_text">%1$d+</string>
+    <string name="main_click_message">Название: %1$s</string>
+    <string name="main_empty_message">Тут должен был быть текст</string>
+
+    <string name="tools_text_movie_title">Фильм-фильм-фильм</string>
+    <string name="tools_text_movie_description">Кстати, многие известные личности освещают чрезвычайно интересные особенности картины в целом, однако конкретные выводы, разумеется, подвергнуты целой серии независимых исследований.</string>
+    <string name="tools_text_movie_rating">4</string>
+    <string name="tools_text_movie_age_description">18+</string>
+    <string name="tools_movie_genre">Боевик</string>
+    <string name="popular">Популярное сейчас</string>
+
+        <string-array name="movie_genre">
+        <item>боевики</item>
+        <item>драмы</item>
+        <item>комедии</item>
+        <item>артхаус</item>
+        <item>мистика</item>
+        <item>мелодрамы</item>
+        <item>приключения</item>
+        <item>триллер</item>
+        <item>фантастика</item>
+    </string-array>
 </resources>
