@@ -3,13 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
     <!-- Main Image CardView -->
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="324dp"
+        android:layout_height="match_parent"
         app:cardCornerRadius="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,8 +18,8 @@
         <ImageView
             android:id="@+id/movie_main_image"
             android:layout_width="match_parent"
-            android:layout_height="324dp"
-            android:background="@mipmap/image_movie_main"
+            android:layout_height="match_parent"
+            android:src="@mipmap/image_movie_main"
             android:scaleType="fitStart"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +32,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="224dp"
-        android:layout_marginBottom="50dp"
         android:elevation="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -132,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="93dp"
-                android:src="@mipmap/ic_raiting_black_star"
+                android:src="@drawable/ic_star_white"
                 app:layout_constraintEnd_toStartOf="@id/raiting_star_2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -144,7 +142,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="93dp"
-                android:src="@mipmap/ic_raiting_black_star"
+                android:src="@drawable/ic_star_white"
                 app:layout_constraintEnd_toStartOf="@id/raiting_star_3"
                 app:layout_constraintStart_toEndOf="@id/raiting_star_1"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -156,7 +154,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="93dp"
-                android:src="@mipmap/ic_raiting_black_star"
+                android:src="@drawable/ic_star_white"
                 app:layout_constraintEnd_toStartOf="@id/raiting_star_4"
                 app:layout_constraintStart_toEndOf="@id/raiting_star_2"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -168,7 +166,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="93dp"
-                android:src="@mipmap/ic_raiting_black_star"
+                android:src="@drawable/ic_star_white"
                 app:layout_constraintEnd_toStartOf="@id/raiting_star_5"
                 app:layout_constraintStart_toEndOf="@id/raiting_star_3"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -180,7 +178,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
                 android:layout_marginTop="93dp"
-                android:src="@mipmap/ic_raiting_white_star"
+                android:src="@drawable/ic_star_white"
                 app:layout_constraintStart_toEndOf="@id/raiting_star_4"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -208,128 +206,30 @@
                 android:layout_marginBottom="16dp"
                 android:text="@string/actors_title"
                 android:textAppearance="@style/actors_title_text_style"
-                app:layout_constraintBottom_toTopOf="@id/actor_scrollview"
+                app:layout_constraintTop_toBottomOf="@id/movie_description"
+                app:layout_constraintBottom_toTopOf="@id/actor_recyclerview"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <!-- Actor frame ScrollView-->
-            <HorizontalScrollView
-                android:id="@+id/actor_scrollview"
-                android:layout_width="0dp"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/actor_recyclerview"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="69dp"
-                android:layout_marginBottom="50dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="@dimen/main_side_offset_20"
+                android:layout_marginTop="@dimen/main_side_offset_12"
+                android:layout_marginEnd="@dimen/main_side_offset_20"
+                android:layout_marginBottom="@dimen/main_side_offset_20"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/movie_description">
-
-                <!-- Actor frame -->
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/actor_frame"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <!-- Actors photo #1-->
-                    <ImageView
-                        android:id="@+id/actor_photo_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:background="@mipmap/image_actor_photo_1"
-                        app:layout_constraintEnd_toStartOf="@id/actor_photo_2"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <!-- Actors photo #2 -->
-                    <ImageView
-                        android:id="@+id/actor_photo_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:background="@mipmap/image_actor_photo_2"
-                        app:layout_constraintEnd_toStartOf="@id/actor_photo_3"
-                        app:layout_constraintStart_toEndOf="@id/actor_photo_1"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                    <!-- Actors photo #3 -->
-                    <ImageView
-                        android:id="@+id/actor_photo_3"
-                        android:layout_width="143dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:background="@mipmap/image_actor_photo_3"
-                        app:layout_constraintEnd_toEndOf="@id/actor_frame"
-                        app:layout_constraintStart_toEndOf="@id/actor_photo_2"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-
-                    <!-- Actors name #1 -->
-                    <TextView
-                        android:id="@+id/actor_name_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="12dp"
-                        android:text="@string/actors_name_1"
-                        android:textAppearance="@style/actor_name"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/actor_photo_1" />
-
-                    <!-- Actors name #2 -->
-                    <TextView
-                        android:id="@+id/actor_name_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="72dp"
-                        android:layout_marginTop="12dp"
-                        android:layout_marginEnd="80dp"
-                        android:text="@string/actors_name_2"
-                        android:textAppearance="@style/actor_name"
-                        app:layout_constraintStart_toEndOf="@id/actor_name_1"
-                        app:layout_constraintTop_toBottomOf="@id/actor_photo_2" />
-
-                    <!-- Actors name #3 -->
-                    <TextView
-                        android:id="@+id/actor_name_3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="74dp"
-                        android:layout_marginTop="12dp"
-                        android:text="@string/actors_name_3"
-                        android:textAppearance="@style/actor_name"
-                        app:layout_constraintHorizontal_chainStyle="spread"
-                        app:layout_constraintStart_toEndOf="@id/actor_name_2"
-                        app:layout_constraintTop_toBottomOf="@id/actor_photo_3" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </HorizontalScrollView>
+                app:layout_constraintTop_toBottomOf="@id/actors_title"
+                tools:listitem="@layout/item_genre" />
+            <Button
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/actor_recyclerview"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
-    <!-- Button home -->
-    <ImageButton
-        android:id="@+id/button_home"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:background="@drawable/ic_home_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/button_account"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <!-- Account button -->
-    <ImageButton
-        android:id="@+id/button_account"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:background="@color/white"
-        android:src="@mipmap/ic_button_account"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/button_home" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

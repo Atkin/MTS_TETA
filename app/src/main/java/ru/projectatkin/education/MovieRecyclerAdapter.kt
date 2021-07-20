@@ -21,10 +21,7 @@ class MovieRecyclerAdapter(
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.bind(movies[position])
         holder.movieLayout?.setOnClickListener {
-            cellClickListener.onCellClickListener(movies[position].title)
-            movies[position].title = "Тест"
-            updateList(movies)
-            holder.bind(movies[position])
+            cellClickListener.onCellClickListener(position.toString())
         }
     }
 
