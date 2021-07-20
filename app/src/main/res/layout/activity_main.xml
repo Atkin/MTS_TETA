@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/popular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/main_side_popular_20"
+        android:layout_marginTop="@dimen/main_top_popular_72"
+        android:layout_marginBottom="@dimen/main_bottom_popular_12"
+        android:text="@string/popular"
+        android:textAppearance="@style/popular_style"
+        app:layout_constraintBottom_toTopOf="@id/recyclerViewMovieGenre"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/find_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/main_find_button_top_offset_30"
+        android:layout_marginEnd="@dimen/main_find_button_end_offset_20"
+        android:background="@color/white"
+        android:src="@drawable/ic_find_movie"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewMovieGenre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/main_side_recyclerview_offset_20"
+        android:layout_marginTop="@dimen/main_bottom_popular_12"
+        android:layout_marginEnd="@dimen/main_side_recyclerview_offset_20"
+        android:layout_marginBottom="@dimen/main_side_recyclerview_offset_20"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/popular"
+        tools:listitem="@layout/item_genre" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewMovie"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/main_side_recyclerview_offset_20"
+        android:layout_marginBottom="@dimen/main_bottom_recyclerview_offset_90"
+        android:clipToPadding="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewMovieGenre"
+        app:layout_goneMarginBottom="@dimen/main_bottom_recyclerview_offset_90"
+        tools:listitem="@layout/item_movie" />
+
+    <ImageButton
+        android:id="@+id/button_home"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:background="@drawable/ic_home_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/button_account"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/button_account"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:src="@mipmap/ic_button_account"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/button_home" />
+</androidx.constraintlayout.widget.ConstraintLayout>

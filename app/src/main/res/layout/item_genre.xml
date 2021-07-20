@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_genre"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/movie_genre_title"
+        android:layout_width="@dimen/main_width_genre_80"
+        android:layout_height="wrap_content"
+        android:background="@mipmap/ic_movie_genre_frame"
+        android:gravity="center"
+        android:textAppearance="@style/movie_genre_style"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/tools_movie_genre" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
