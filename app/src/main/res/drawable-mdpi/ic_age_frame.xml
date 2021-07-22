@@ -4,15 +4,15 @@
     android:shape="oval" >
 
     <stroke
-        android:width="@dimen/main_age_restriction_stroke_width"
+        android:width="@dimen/main_side_offset_1"
         android:color="@color/black"
         />
 
     <solid android:color="@color/white" />
 
     <size
-        android:width="@dimen/main_age_restriction_size"
-        android:height="@dimen/main_age_restriction_size"
+        android:width="@dimen/main_side_offset_20"
+        android:height="@dimen/main_side_offset_20"
         />
 
 </shape>

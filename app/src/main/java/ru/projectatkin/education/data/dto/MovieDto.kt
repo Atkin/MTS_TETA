@@ -5,5 +5,7 @@ data class MovieDto(
 	var description: String?,
 	var rateScore: Int?,
 	var ageRestriction: String?,
-	var imageUrl: String?
+	var imageUrl: String?,
+	var genre: String?,
+	var date: String?
 )

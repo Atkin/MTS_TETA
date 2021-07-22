@@ -9,18 +9,6 @@ class MovieItemOffsetDecoration(
     var headerNum: Int
 ) : RecyclerView.ItemDecoration() {
 
-    fun GridSpacingItemDecoration(
-        spanCount: Int,
-        spacing: Int,
-        includeEdge: Boolean,
-        headerNum: Int
-    ) {
-        this.spanCount = spanCount;
-        this.spacing = spacing;
-        this.includeEdge = includeEdge;
-        this.headerNum = headerNum;
-    }
-
     override fun getItemOffsets(
         outRect: Rect,
         view: View,

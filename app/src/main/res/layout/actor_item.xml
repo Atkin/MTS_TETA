@@ -2,20 +2,28 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/root_genre"
+    android:id="@+id/root_actor"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     tools:context=".MainActivity">
 
+    <ImageView
+        android:id="@+id/actor_photo"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:src="@tools:sample/avatars"/>
+
     <TextView
-        android:id="@+id/movie_genre_title"
+        android:id="@+id/actor_name"
         android:layout_width="@dimen/main_side_offset_80"
         android:layout_height="wrap_content"
-        android:background="@mipmap/ic_movie_genre_frame"
         android:gravity="center"
         android:textAppearance="@style/movie_genre_style"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/tools_movie_genre" />
+        android:layout_marginStart="@dimen/main_side_offset_20"
+        app:layout_constraintTop_toBottomOf="@id/actor_photo"
+        tools:text="Актёр" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

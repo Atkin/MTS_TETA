@@ -7,7 +7,7 @@ import ru.projectatkin.education.data.dto.MovieGenre
 
 class MovieGenreRecyclerAdapter(
     private val genres: MutableList<MovieGenre>,
-    private val cellClickListener: CellClickListener
+    private val cellClickListener: CellClickListenerGenre
 ) : RecyclerView.Adapter<MovieGenreViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieGenreViewHolder {
@@ -20,7 +20,7 @@ class MovieGenreRecyclerAdapter(
     override fun onBindViewHolder(holder: MovieGenreViewHolder, position: Int) {
         holder.bind(genres[position].name)
         holder.genreLayout?.setOnClickListener {
-            cellClickListener.onCellClickListener(genres[position].name)
+            cellClickListener.onCellClickListenerGenre(genres[position].name)
         }
     }
 

@@ -4,15 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@drawable/layout_bg"
+    android:id="@+id/main_container">
 
     <TextView
         android:id="@+id/popular"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/main_side_popular_20"
-        android:layout_marginTop="@dimen/main_top_popular_72"
-        android:layout_marginBottom="@dimen/main_bottom_popular_12"
+        android:layout_marginStart="@dimen/main_side_offset_20"
+        android:layout_marginTop="@dimen/main_side_offset_72"
+        android:layout_marginBottom="@dimen/main_side_offset_12"
         android:text="@string/popular"
         android:textAppearance="@style/popular_style"
         app:layout_constraintBottom_toTopOf="@id/recyclerViewMovieGenre"
@@ -23,8 +25,8 @@
         android:id="@+id/find_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/main_find_button_top_offset_30"
-        android:layout_marginEnd="@dimen/main_find_button_end_offset_20"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="@dimen/main_side_offset_20"
         android:background="@color/white"
         android:src="@drawable/ic_find_movie"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,10 +36,10 @@
         android:id="@+id/recyclerViewMovieGenre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/main_side_recyclerview_offset_20"
-        android:layout_marginTop="@dimen/main_bottom_popular_12"
-        android:layout_marginEnd="@dimen/main_side_recyclerview_offset_20"
-        android:layout_marginBottom="@dimen/main_side_recyclerview_offset_20"
+        android:layout_marginStart="@dimen/main_side_offset_20"
+        android:layout_marginTop="@dimen/main_side_offset_12"
+        android:layout_marginEnd="@dimen/main_side_offset_20"
+        android:layout_marginBottom="@dimen/main_side_offset_20"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,32 +51,25 @@
         android:id="@+id/recyclerViewMovie"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/main_side_recyclerview_offset_20"
-        android:layout_marginBottom="@dimen/main_bottom_recyclerview_offset_90"
+        android:layout_marginTop="@dimen/main_side_offset_20"
+        android:layout_marginBottom="@dimen/main_side_offset_90"
         android:clipToPadding="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recyclerViewMovieGenre"
-        app:layout_goneMarginBottom="@dimen/main_bottom_recyclerview_offset_90"
+        app:layout_goneMarginBottom="@dimen/main_side_offset_90"
         tools:listitem="@layout/item_movie" />
 
-    <ImageButton
-        android:id="@+id/button_home"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:background="@drawable/ic_home_button"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/list_bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:labelVisibilityMode="unlabeled"
+        app:itemIconTint="@drawable/tab_icon_color"
+        app:itemBackground="@drawable/tab_color"
+        app:menu="@menu/list_bottom_navigation_menu"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/button_account"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageButton
-        android:id="@+id/button_account"
-        android:layout_width="0dp"
-        android:layout_height="48dp"
-        android:background="@color/white"
-        android:src="@mipmap/ic_button_account"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/button_home" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

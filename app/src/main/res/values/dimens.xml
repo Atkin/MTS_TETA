@@ -1,28 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="main_poster_width">216dp</dimen>
-    <dimen name="main_title_top_offset">8dp</dimen>
-    <dimen name="main_description_top_offset">10dp</dimen>
-    <dimen name="main_rating_top_offset">10dp</dimen>
-    <dimen name="main_side_genre_offset_3">3dp</dimen>
-    <dimen name="main_side_recyclerview_offset_20">20dp</dimen>
-    <dimen name="main_side_recyclerview_offset_10">10dp</dimen>
-    <dimen name="main_bottom_recyclerview_offset_90">90dp</dimen>
-    <dimen name="main_find_button_top_offset_30">30dp</dimen>
-    <dimen name="main_find_button_end_offset_20">20dp</dimen>
+    <dimen name="main_side_offset_1">1dp</dimen>
+    <dimen name="main_side_offset_3">3dp</dimen>
+    <dimen name="main_side_offset_8">8dp</dimen>
     <dimen name="main_side_offset_10">10dp</dimen>
-    <dimen name="main_recyclerview_movie_top_offset_15">15dp</dimen>
-    <dimen name="main_raiting_star_top_offset_15">15dp</dimen>
-
-    <dimen name="main_age_restriction_stroke_width">1dp</dimen>
-    <dimen name="main_age_restriction_size">20dp</dimen>
-
-    <dimen name="size_movies_list_title">14sp</dimen>
-    <dimen name="size_movies_list_description">12sp</dimen>
-
-    <dimen name="main_side_popular_20">20dp</dimen>
-    <dimen name="main_bottom_popular_12">12dp</dimen>
-    <dimen name="main_top_popular_72">72dp</dimen>
-
-    <dimen name="main_width_genre_80">80dp</dimen>
+    <dimen name="main_side_offset_12">12sp</dimen>
+    <dimen name="main_side_offset_14">14sp</dimen>
+    <dimen name="main_side_offset_15">15dp</dimen>
+    <dimen name="main_side_offset_20">20dp</dimen>
+    <dimen name="main_side_offset_72">72dp</dimen>
+    <dimen name="main_side_offset_80">80dp</dimen>
+    <dimen name="main_side_offset_90">90dp</dimen>
+    <dimen name="main_poster_width">216dp</dimen>
 </resources>
