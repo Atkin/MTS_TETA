@@ -44,7 +44,11 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
 
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1"
 
     implementation "io.coil-kt:coil-base:$coil_version"
     implementation "io.coil-kt:coil:$coil_version"
+
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
 }

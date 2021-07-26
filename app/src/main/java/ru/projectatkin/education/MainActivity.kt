@@ -3,20 +3,33 @@ package ru.projectatkin.education
 import MovieItemOffsetDecoration
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.coroutines.*
 import ru.projectatkin.education.data.features.movies.MoviesDataSourceImpl
 import ru.projectatkin.education.data.features.movies.MovieGenreDataBase
+import ru.projectatkin.education.data.features.movies.MovieSecondDataBase
 
-class MainActivity : AppCompatActivity(), CellClickListener, CellClickListenerGenre {
+const val TAG = "MainActivity"
+
+class MainActivity : AppCompatActivity(), CellClickListener, CellClickListenerGenre,
+    CoroutineScope {
     private lateinit var moviesModel: MoviesModel
     private lateinit var moviesGenreModel: MoviesGenreModel
     private lateinit var bottomNavigationBar: BottomNavigationView
+    private lateinit var secondMoviesModel: MoviesModel
     private var currentFragment: Fragment? = null
+    var adapter: MovieRecyclerAdapter? = null
+    protected val job = SupervisorJob() // экземпляр Job для данной активности
+    override val coroutineContext = Dispatchers.Main.immediate + job
+    protected var downloadStatus: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,10 +37,10 @@ class MainActivity : AppCompatActivity(), CellClickListener, CellClickListenerGe
 
         val recyclerView: RecyclerView = findViewById(R.id.recyclerViewMovie)
         moviesModel = MoviesModel(MoviesDataSourceImpl())
-        val adapter = MovieRecyclerAdapter(moviesModel.getMovies(), this)
+        secondMoviesModel = MoviesModel(MovieSecondDataBase())
+        this.adapter = MovieRecyclerAdapter(moviesModel.getMovies(), this)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = GridLayoutManager(this, 2)
-        adapter.updateList(moviesModel.getMovies())
 
         val recyclerGenreView: RecyclerView = findViewById(R.id.recyclerViewMovieGenre)
         moviesGenreModel = MoviesGenreModel(MovieGenreDataBase())
@@ -46,6 +59,12 @@ class MainActivity : AppCompatActivity(), CellClickListener, CellClickListenerGe
         recyclerGenreView.addItemDecoration(genreDecorator)
 
         val profileFragment = supportFragmentManager.findFragmentById(R.id.main_container)
+
+        val swipeRefreshLayout = findViewById<SwipeRefreshLayout>(R.id.swip)
+        swipeRefreshLayout.setOnRefreshListener {
+            downloadFilms(recyclerView)
+            swipeRefreshLayout.isRefreshing = false
+        }
 
         bottomNavigationBar = findViewById(R.id.list_bottom_navigation)
         this.bottomNavigationBar.setOnNavigationItemSelectedListener {
@@ -70,7 +89,40 @@ class MainActivity : AppCompatActivity(), CellClickListener, CellClickListenerGe
         }
     }
 
+    fun downloadFilms(view: View) {
+        runBlocking {
+            launch {
+                if (this@MainActivity.downloadStatus == false) {
+                    download()
+                    Toast.makeText(this@MainActivity, "Loading error. Please try again", Toast.LENGTH_LONG).show()
+                } else {
+                    delay(5000)
+                    this@MainActivity.adapter!!.updateList(secondMoviesModel.getMovies())
+                }
+            }
+        }
+    }
+
+    suspend fun download() = coroutineScope {
+        val scope = CoroutineScope(Dispatchers.Default)
+        val handler = CoroutineExceptionHandler { _, exception ->
+            Log.d(TAG, "Error")
+            this@MainActivity.downloadStatus = true
+        }
+        val job = scope.launch(handler) {
+            Thread.sleep(5000)
+            throw ArithmeticException()
+        }
+        job.join()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        this.job.cancel()
+    }
+
     fun switchToFragment(fragment: Fragment) {
+        fragment.arguments?.putBoolean("IS_UPDATED", true)
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.main_container, fragment)
