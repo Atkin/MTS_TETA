@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import ru.projectatkin.education.data.dto.MovieDto
 import ru.projectatkin.education.data.features.movies.MovieActorDataBase
+import ru.projectatkin.education.data.features.movies.MovieSecondDataBase
 import ru.projectatkin.education.data.features.movies.MoviesDataSourceImpl
 
 class MovieCardFragment() : Fragment() {
@@ -51,9 +52,15 @@ class MovieCardFragment() : Fragment() {
         raitingStar5 = view.findViewById(R.id.raiting_star_5)
 
         val position = arguments?.getInt("MOVIE_POSITION")
-        this.moviesModel = MoviesModel(MoviesDataSourceImpl())
+        val isUpdated = arguments?.getBoolean("IS_UPDATED")
+        if (isUpdated == true) {
+            this.moviesModel = MoviesModel(MovieSecondDataBase())
+        } else {
+            this.moviesModel = MoviesModel(MoviesDataSourceImpl())
+        }
         this.movies = moviesModel.getMovies()
         this.movie = movies[position!!]
+
 
         val recyclerView: RecyclerView = view.findViewById(R.id.actor_recyclerview)
         actorsModel = ActorsModel(MovieActorDataBase())
@@ -65,11 +72,13 @@ class MovieCardFragment() : Fragment() {
         return view
     }
 
+
     private fun updateUI() {
         this.movieImage.load(this.movie.imageUrl ?: "https://i.ibb.co/Bf42WH6/900-600.jpg")
         this.movieAge.text = this.movie.ageRestriction ?: "99+"
         this.movieTitle.text = this.movie.title ?: "Фильму быть!"
-        this.movieDescription.text = this.movie.description ?: "Здесь должно быть описание фильма. Возможно, когда-нибудь оно будет. Оставайтесь с нами"
+        this.movieDescription.text = this.movie.description
+            ?: "Здесь должно быть описание фильма. Возможно, когда-нибудь оно будет. Оставайтесь с нами"
         this.movieGenre.text = this.movie.genre ?: "Жанр"
         this.movieDate.text = this.movie.date ?: "00.00.1900"
 
