@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "473029050374",
+    "project_id": "firstapplication-4b208",
+    "storage_bucket": "firstapplication-4b208.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:473029050374:android:9ea3986d30cc3d8c7ac387",
+        "android_client_info": {
+          "package_name": "ru.projectatkin.education"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "473029050374-8tpu5j47vhtsikuu7ce47219bne355ri.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgd4-Q0rQKd1wYK-YyOM6U8hyaZof_6do"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "473029050374-8tpu5j47vhtsikuu7ce47219bne355ri.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_container"
@@ -8,81 +9,17 @@
     android:background="@drawable/layout_bg"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/popular"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/main_side_offset_20"
-        android:layout_marginTop="@dimen/main_side_offset_72"
-        android:layout_marginBottom="@dimen/main_side_offset_12"
-        android:text="@string/popular"
-        android:textAppearance="@style/popular_style"
-        app:layout_constraintBottom_toTopOf="@id/recyclerViewMovieGenre"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageButton
-        android:id="@+id/find_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="@dimen/main_side_offset_20"
-        android:background="@color/white"
-        android:src="@drawable/ic_find_movie"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewMovieGenre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/main_side_offset_20"
-            android:layout_marginTop="@dimen/main_side_offset_12"
-            android:layout_marginEnd="@dimen/main_side_offset_20"
-            android:layout_marginBottom="@dimen/main_side_offset_20"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/popular"
-            tools:listitem="@layout/item_genre" />
-
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swip"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/navigationMovies"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="260dp">
-
-
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerViewMovie"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="@dimen/main_side_offset_20"
-            android:layout_marginBottom="@dimen/main_side_offset_90"
-            android:clipToPadding="false"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recyclerViewMovieGenre"
-            app:layout_goneMarginBottom="@dimen/main_side_offset_90"
-            tools:listitem="@layout/item_movie" />
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/list_bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        app:itemBackground="@drawable/tab_color"
-        app:itemIconTint="@drawable/tab_icon_color"
-        app:labelVisibilityMode="unlabeled"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/list_bottom_navigation_menu" />
+        app:navGraph="@navigation/nav_graph"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="51dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
