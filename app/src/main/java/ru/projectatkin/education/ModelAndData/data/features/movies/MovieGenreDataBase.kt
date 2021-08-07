@@ -1,6 +1,6 @@
 package ru.projectatkin.education.ModelAndData.data.features.movies
 
-import MovieGenreDataSource
+import ru.projectatkin.education.MovieGenreDataSource
 import ru.projectatkin.education.ModelAndData.data.dto.MovieGenre
 
 class MovieGenreDataBase : MovieGenreDataSource {

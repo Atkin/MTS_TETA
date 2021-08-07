@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.projectatkin.education.CellClickListener
+import ru.projectatkin.education.ModelAndData.data.DataBase.Movies
 import ru.projectatkin.education.ModelAndData.data.dto.MovieDto
 import ru.projectatkin.education.R
 import ru.projectatkin.education.View.ViewHolders.MovieViewHolder
@@ -13,7 +14,8 @@ class MovieRecyclerAdapter(
 
     private val cellClickListener: CellClickListener
 ) : RecyclerView.Adapter<MovieViewHolder>() {
-    private var movies: MutableList<MovieDto> = ArrayList()
+    //private var movies: MutableList<MovieDto> = ArrayList()
+    private var movies = emptyList<Movies>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val itemView =
@@ -33,12 +35,17 @@ class MovieRecyclerAdapter(
         return movies.size
     }
 
-    fun updateList(newMovies: List<MovieDto>) {
-        if (movies!=null){
-            movies.clear()
-            movies.addAll(newMovies)
-            notifyDataSetChanged()
-            Log.d("initDataBlock", "size  = $itemCount")
-        }
+   // fun updateList(newMovies: List<MovieDto>) {
+   //     if (movies!=null){
+    //        movies.clear()
+    //        movies.addAll(newMovies)
+    //        notifyDataSetChanged()
+    //        Log.d("initDataBlock", "size  = $itemCount")
+    //    }
+   // }
+
+    fun updateMoviesList(newMovies: List<Movies>) {
+        this.movies = newMovies
+        notifyDataSetChanged()
     }
 }

@@ -1,6 +1,6 @@
 package ru.projectatkin.education.ModelAndData.data.features.movies
 
-import MovieActorDataSource
+import ru.projectatkin.education.MovieActorDataSource
 import ru.projectatkin.education.ModelAndData.data.dto.MovieActor
 
 class MovieActorDataBase : MovieActorDataSource {

@@ -7,7 +7,7 @@ import androidx.constraintlayout.widget.Barrier
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import ru.projectatkin.education.ModelAndData.data.dto.MovieDto
+import ru.projectatkin.education.ModelAndData.data.DataBase.Movies
 import ru.projectatkin.education.R
 
 class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -38,7 +38,7 @@ class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         raitingStar5 = itemView.findViewById(R.id.ic_raiting_star_5)
     }
 
-    fun bind(movies: MovieDto) {
+    fun bind(movies: Movies) {
         movieImage?.load(movies.imageUrl ?: "https://i.ibb.co/Bf42WH6/900-600.jpg")
         movieTitle?.text = movies.title ?: "Фильму быть!"
         movieDescription?.text = movies.description

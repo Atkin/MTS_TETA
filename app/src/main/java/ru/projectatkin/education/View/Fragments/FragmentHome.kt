@@ -12,6 +12,7 @@ import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,10 +20,10 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.*
 import ru.projectatkin.education.*
+import ru.projectatkin.education.ModelAndData.data.DataBase.MoviesViewModel
 import ru.projectatkin.education.View.Adapters.MovieGenreRecyclerAdapter
 import ru.projectatkin.education.View.Adapters.MovieRecyclerAdapter
 import ru.projectatkin.education.ViewModels.GenreViewModel
-import ru.projectatkin.education.ViewModels.MovieViewModel
 import java.util.*
 
 const val TAG_HOME = "HomeFragment"
@@ -37,7 +38,9 @@ class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, Coro
     lateinit var sharedPreference: SharedPreference
 
     private val genreViewModel: GenreViewModel by viewModels()
-    private val movieViewModel: MovieViewModel by viewModels()
+
+    //private val movieViewModel: MovieViewModel by viewModels()
+    private lateinit var moviesViewModel: MoviesViewModel
 
     private lateinit var genreAdapter: MovieGenreRecyclerAdapter
     private lateinit var genreRecyclerView: RecyclerView
@@ -65,7 +68,7 @@ class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, Coro
         sharedPreference = SharedPreference(requireContext())
         downloadStatus = sharedPreference.getValueBoolien("downloaded", false)
         if (downloadStatus == true) {
-            movieViewModel.tempUpdate()
+            // movieViewModel.tempUpdate()
         }
 
         val view = inflater.inflate(R.layout.fragment_home, container, false)
@@ -93,10 +96,18 @@ class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, Coro
         movieRecyclerView.addItemDecoration(movieDecorator)
 
         genreViewModel.dataListGenre.observe(viewLifecycleOwner, Observer(genreAdapter::updateList))
-        movieViewModel.dataListMovie.observe(viewLifecycleOwner, Observer(movieAdapter::updateList))
+
+        moviesViewModel = ViewModelProvider(this).get(MoviesViewModel::class.java)
+        moviesViewModel.readAllData.observe(viewLifecycleOwner, Observer { words ->
+            // Update the cached copy of the words in the adapter.
+            words?.let {
+                movieAdapter.updateMoviesList(it)
+            }
+        })
+        //movieViewModel.dataListMovie.observe(viewLifecycleOwner, Observer(movieAdapter::updateList))
 
         genreViewModel.loadGenre()
-        movieViewModel.loadMovies()
+        //movieViewModel.loadMovies()
 
         bottomNavigationBar = view.findViewById(R.id.list_bottom_navigation)
         this.bottomNavigationBar.setOnNavigationItemSelectedListener {
@@ -105,7 +116,7 @@ class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, Coro
                     Log.d(TAG_HOME, "Same")
                 }
                 R.id.list_profile_button -> {
-                        findNavController().navigate(R.id.action_fragmentHome_to_fragmentProfile, null)
+                    findNavController().navigate(R.id.action_fragmentHome_to_fragmentProfile, null)
                 }
                 else -> {
                     Log.d(TAG_HOME, "Empty")
@@ -134,7 +145,7 @@ class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, Coro
                     }
                 } else {
                     delay(5000)
-                    this@FragmentHome.movieViewModel.tempUpdate()
+                   // this@FragmentHome.movieViewModel.tempUpdate()
                 }
             }
         }
@@ -144,7 +155,7 @@ class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, Coro
         super.onStart()
         downloadStatus = sharedPreference.getValueBoolien("downloaded", false)
         if (downloadStatus == true) {
-            movieViewModel.tempUpdate()
+           // movieViewModel.tempUpdate()
         }
     }
 
