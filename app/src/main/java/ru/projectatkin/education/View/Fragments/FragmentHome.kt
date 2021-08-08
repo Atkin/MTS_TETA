@@ -130,7 +130,6 @@ class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, Coro
             }
             true
         }
-
         return view
     }
 
