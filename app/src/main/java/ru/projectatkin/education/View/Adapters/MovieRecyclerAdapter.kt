@@ -1,12 +1,10 @@
 package ru.projectatkin.education.View.Adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.projectatkin.education.CellClickListener
-import ru.projectatkin.education.ModelAndData.data.DataBase.Movies
-import ru.projectatkin.education.ModelAndData.data.dto.MovieDto
+import ru.projectatkin.education.ModelAndData.data.lowercase.Movies
 import ru.projectatkin.education.R
 import ru.projectatkin.education.View.ViewHolders.MovieViewHolder
 

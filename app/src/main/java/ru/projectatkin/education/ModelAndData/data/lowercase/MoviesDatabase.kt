@@ -1,4 +1,4 @@
-package ru.projectatkin.education.ModelAndData.data.DataBase
+package ru.projectatkin.education.ModelAndData.data.lowercase
 
 import android.content.Context
 import androidx.room.Database

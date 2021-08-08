@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,8 +18,9 @@ import coil.load
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ru.projectatkin.education.CellClickListener
 import ru.projectatkin.education.ModelAndData.data.ActorsModel
-import ru.projectatkin.education.ModelAndData.data.dto.MovieDto
 import ru.projectatkin.education.ModelAndData.data.features.movies.MovieActorDataBase
+import ru.projectatkin.education.ModelAndData.data.lowercase.Movies
+import ru.projectatkin.education.ModelAndData.data.lowercase.MoviesViewModel
 import ru.projectatkin.education.R
 import ru.projectatkin.education.View.Adapters.MovieActorAdapter
 import ru.projectatkin.education.View.Adapters.MovieRecyclerAdapter
@@ -44,6 +46,8 @@ class FragmentDetails() : Fragment(), CellClickListener {
     private val movieViewModel: MovieViewModel by viewModels()
     private lateinit var movieAdapter: MovieRecyclerAdapter
 
+    private lateinit var moviesViewModel: MoviesViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -65,6 +69,8 @@ class FragmentDetails() : Fragment(), CellClickListener {
         val position = arguments?.getInt("position")
         val downloadStatus = arguments?.getBoolean("downloaded")
 
+        moviesViewModel = ViewModelProvider(this).get(MoviesViewModel::class.java)
+
         val recyclerView: RecyclerView = view.findViewById(R.id.actor_recyclerview)
         actorsModel = ActorsModel(MovieActorDataBase())
         val adapter = MovieActorAdapter(actorsModel.getActors())
@@ -73,13 +79,21 @@ class FragmentDetails() : Fragment(), CellClickListener {
 
         movieAdapter = MovieRecyclerAdapter(this)
 
-        movieViewModel.dataListMovie.observe(viewLifecycleOwner, Observer {
-            if (downloadStatus == true) {
-                movieViewModel.tempUpdate()
+        moviesViewModel.readAllData.observe(viewLifecycleOwner, Observer { words ->
+            // Update the cached copy of the words in the adapter.
+            words?.let {
+                movieAdapter.updateMoviesList(it)
             }
-            updateUI(it[position!!])
+            updateUI(words[position!!])
         })
-        movieViewModel.loadMovies()
+
+       // movieViewModel.dataListMovie.observe(viewLifecycleOwner, Observer {
+       //     if (downloadStatus == true) {
+       //         movieViewModel.tempUpdate()
+       //     }
+       //     updateUI(it[position!!])
+       // })
+       // movieViewModel.loadMovies()
 
         bottomNavigationBar = view.findViewById(R.id.list_bottom_navigation_details)
         this.bottomNavigationBar.setOnNavigationItemSelectedListener {
@@ -107,7 +121,7 @@ class FragmentDetails() : Fragment(), CellClickListener {
         Log.d(TAG_DETAILS, "Destroy")
     }
 
-    private fun updateUI(movie: MovieDto) {
+    private fun updateUI(movie: Movies) {
         movieImage.load(movie.imageUrl ?: "https://i.ibb.co/Bf42WH6/900-600.jpg")
         movieAge.text = movie.ageRestriction ?: "99+"
         movieTitle.text = movie.title ?: "Фильму быть!"

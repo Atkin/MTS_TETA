@@ -7,7 +7,7 @@ import androidx.constraintlayout.widget.Barrier
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import ru.projectatkin.education.ModelAndData.data.DataBase.Movies
+import ru.projectatkin.education.ModelAndData.data.lowercase.Movies
 import ru.projectatkin.education.R
 
 class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

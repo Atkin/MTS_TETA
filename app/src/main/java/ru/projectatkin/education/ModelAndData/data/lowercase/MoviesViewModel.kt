@@ -1,4 +1,4 @@
-package ru.projectatkin.education.ModelAndData.data.DataBase
+package ru.projectatkin.education.ModelAndData.data.lowercase
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -14,25 +14,25 @@ class MoviesViewModel (application: Application): AndroidViewModel(application) 
     private val repository: MoviesRepository
 
     init {
-        val userDao = MoviesDatabase.getDatabase(application).moviesDao()
-        repository = MoviesRepository(userDao)
+        val moviesDao = MoviesDatabase.getDatabase(application).moviesDao()
+        repository = MoviesRepository(moviesDao)
         readAllData = repository.readAllData
     }
 
-    fun addUser(movies: Movies) {
+    fun addMovie(movies: Movies) {
         //Coroutine function
         viewModelScope.launch(Dispatchers.IO) {
             repository.addMovie(movies)
         }
     }
 
-    fun updateUser(movies: Movies) {
+    fun updateMovie(movies: Movies) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.updateMovie(movies)
         }
     }
 
-    fun deleteAllUsers() {
+    fun deleteAllMovies() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteAllMovies()
         }

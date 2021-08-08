@@ -8,4 +8,5 @@ data class MovieDto(
 	var imageUrl: String?,
 	var genre: String?,
 	var date: String?
+
 )

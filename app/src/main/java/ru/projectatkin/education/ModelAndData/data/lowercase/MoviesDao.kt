@@ -1,4 +1,4 @@
-package ru.projectatkin.education.ModelAndData.data.DataBase
+package ru.projectatkin.education.ModelAndData.data.lowercase
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
@@ -15,5 +15,5 @@ interface  MoviesDao {
     suspend fun updateMovie(movies: Movies)
 
     @Query("DELETE FROM Movies")
-    suspend fun deleteAllMovies(): Long
+    suspend fun deleteAllMovies()
 }
