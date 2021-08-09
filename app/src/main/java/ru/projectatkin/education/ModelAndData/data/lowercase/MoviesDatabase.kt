@@ -6,11 +6,12 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = arrayOf(Movies::class), version = 1, exportSchema = false)
+@Database(entities = arrayOf(Movies::class, Profile::class), version = 1, exportSchema = false)
 @TypeConverters(MoviesTypeConverters::class)
 abstract class MoviesDatabase : RoomDatabase() {
 
     abstract fun moviesDao(): MoviesDao
+    abstract fun profileDao(): ProfileDao
 
     companion object {
         @Volatile
@@ -25,7 +26,7 @@ abstract class MoviesDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context,
                     MoviesDatabase::class.java,
-                    "user_database"
+                    "movies_database"
                 ).build()
                 INSTANCE = instance
                 return instance
