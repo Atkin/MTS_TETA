@@ -2,8 +2,6 @@ package ru.projectatkin.education
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import ru.projectatkin.education.ModelAndData.data.dto.MovieActor
-import ru.projectatkin.education.ModelAndData.data.dto.MovieGenre
 
 const val TAG = "MainActivity"
 
@@ -26,12 +24,4 @@ interface CellClickListener {
 
 interface CellClickListenerGenre {
     fun onCellClickListenerGenre(title: String?)
-}
-
-interface MovieActorDataSource {
-    fun getMovieActor(): MutableList<MovieActor>
-}
-
-interface MovieGenreDataSource {
-  fun getMovieGenre(): MutableList<MovieGenre>
 }

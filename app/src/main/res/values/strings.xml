@@ -25,7 +25,11 @@
     <string name="account_email">mail@ru</string>
     <string name="account_interests">Интересы</string>
     <string name="account_private_data">Личные данные</string>
-    <string name="account_name_title_data">Имя</string>
+    <string name="account_name_title_data">Введите имя</string>
+    <string name="account_surname_title_data">Введите фамилию</string>
+    <string name="account_password_title_data">Введите пароль</string>
+    <string name="account_email_title_data">Введите e-mail</string>
+    <string name="account_telephone_title_data">Введите телефон</string>
     <string name="account_edit_name">*</string>
     <string name="account_edit_password">*</string>
     <string name="account_edit_email">*</string>

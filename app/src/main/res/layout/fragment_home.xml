@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:id="@+id/main_container"
     android:background="@drawable/layout_bg"
-    tools:context=".View.Fragments.FragmentHome">
+    tools:context=".view.fragments.FragmentHome">
 
     <TextView
         android:id="@+id/popular"
