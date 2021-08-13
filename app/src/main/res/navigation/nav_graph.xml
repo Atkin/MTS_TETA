@@ -6,7 +6,7 @@
     app:startDestination="@id/fragmentHome">
     <fragment
         android:id="@+id/fragmentHome"
-        android:name="ru.projectatkin.education.View.Fragments.FragmentHome"
+        android:name="ru.projectatkin.education.view.fragments.FragmentHome"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
@@ -18,7 +18,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentDetails"
-        android:name="ru.projectatkin.education.View.Fragments.FragmentDetails"
+        android:name="ru.projectatkin.education.view.fragments.FragmentDetails"
         android:label="FragmentDetails" >
         <action
             android:id="@+id/action_fragmentDetails_to_fragmentProfile"
@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentProfile"
-        android:name="ru.projectatkin.education.View.Fragments.FragmentProfile"
+        android:name="ru.projectatkin.education.view.fragments.FragmentProfile"
         android:label="FragmentProfile" >
         <action
             android:id="@+id/action_fragmentProfile_to_fragmentHome"
