@@ -4,6 +4,7 @@ import MovieItemOffsetDecoration
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -197,9 +198,12 @@ class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, Coro
                         result.overview,
                         ((result.vote_average)/2).toInt(),
                         "12+",
-                        //Адреса ссылок постеров, которые прихотят с ответом, не работают. Поставлена временная заглушка
-                        //result.poster_path,
-                        "https://i.ibb.co/Bf42WH6/900-600.jpg",
+                        if(isValidUrl(result.poster_path)) {
+                            result.poster_path
+                        }
+                        else {
+                            "https://i.ibb.co/Bf42WH6/900-600.jpg"
+                        },
                         result.genre_ids[0],
                         result.release_date,
                         0,
@@ -287,5 +291,11 @@ class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, Coro
 
     override fun onCellClickListenerGenre(title: String?) {
         Log.d(TAG_HOME, "Empty")
+    }
+
+    fun isValidUrl(url: String): Boolean {
+        val p = Patterns.WEB_URL
+        val m = p.matcher(url)
+        return m.matches()
     }
 }
