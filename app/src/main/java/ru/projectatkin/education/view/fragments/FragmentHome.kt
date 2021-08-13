@@ -16,9 +16,17 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.coroutines.*
+import retrofit2.Retrofit
+import retrofit2.awaitResponse
+import retrofit2.converter.gson.GsonConverterFactory
 import ru.projectatkin.education.*
+import ru.projectatkin.education.ModelAndData.data.lowercase.Genre.Genres
 import ru.projectatkin.education.ModelAndData.data.lowercase.Movies.Movies
+import ru.projectatkin.education.ModelAndData.data.lowercase.Retrofit.Interface.ApiRequests
+import ru.projectatkin.education.ModelAndData.data.lowercase.Retrofit.model.Genres.GenresDB
+import ru.projectatkin.education.ModelAndData.data.lowercase.Retrofit.model.Movies.MovieDB
 import ru.projectatkin.education.ViewModels.ActorsViewModel
 import ru.projectatkin.education.ViewModels.GenresViewModel
 import ru.projectatkin.education.ViewModels.MoviesViewModel
@@ -27,6 +35,8 @@ import ru.projectatkin.education.view.Adapters.MovieRecyclerAdapter
 import java.util.*
 
 const val TAG_HOME = "HomeFragment"
+const val BASE_URL = "https://api.themoviedb.org"
+
 
 class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, CoroutineScope {
     private lateinit var bottomNavigationBar: BottomNavigationView
@@ -47,6 +57,9 @@ class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, Coro
     private lateinit var movieAdapter: MovieRecyclerAdapter
     private lateinit var movieRecyclerView: RecyclerView
 
+    private lateinit var moviesDB: MovieDB
+    private lateinit var genresDB: GenresDB
+
 
     companion object {
         const val NOTIFICATION_ID = 101
@@ -64,7 +77,9 @@ class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, Coro
         moviesViewModel = ViewModelProvider(this).get(MoviesViewModel::class.java)
         genresViewModel = ViewModelProvider(this).get(GenresViewModel::class.java)
 
-        addMoviesList(moviesViewModel, downloadStatus)
+
+        getMoviesDB()
+        getGenresDB()
 
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
@@ -138,8 +153,9 @@ class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, Coro
                         notify(NOTIFICATION_ID, builder.build()) // посылаем уведомление
                     }
                 } else {
-                    delay(5000)
-                    addMoviesList(moviesViewModel, this@FragmentHome.downloadStatus)
+                    delay(2000)
+                    addMoviesBDList(moviesViewModel, this@FragmentHome.downloadStatus, moviesDB)
+                    addGenresDBList(genresViewModel, this@FragmentHome.downloadStatus, genresDB)
                 }
             }
         }
@@ -149,7 +165,7 @@ class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, Coro
         super.onStart()
         downloadStatus = sharedPreference.getValueBoolien("downloaded", false)
         if (downloadStatus) {
-            addMoviesList(moviesViewModel, downloadStatus)
+            getMoviesDB()
         }
     }
 
@@ -160,147 +176,93 @@ class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, Coro
             this@FragmentHome.downloadStatus = true
         }
         val job = scope.launch(handler) {
-            delay(5000)
+            delay(2000)
             throw ArithmeticException()
         }
         job.join()
     }
 
-    private fun addMoviesList(moviesViewModel: MoviesViewModel, downloads: Boolean) {
+
+    private fun addMoviesBDList(
+        moviesViewModel: MoviesViewModel,
+        downloads: Boolean,
+        moviesDB: MovieDB
+    ) {
         if (downloads) {
             moviesViewModel.deleteAllMovies()
-            moviesViewModel.addMovie(
-                Movies(
-                    "Побег из Шоушенка",
-                    "Выдающаяся драма о силе таланта, важности дружбы, стремлении к свободе и Рите Хэйворт",
-                    4,
-                    "16+",
-                    "https://i.ibb.co/QMgj3d5/1.jpg",
-                    5,
-                    "10.09.1994", 0,
-                    0
+            for (result in moviesDB.results) {
+                moviesViewModel.addMovie(
+                    Movies(
+                        result.original_title,
+                        result.overview,
+                        ((result.vote_average)/2).toInt(),
+                        "12+",
+                        //Адреса ссылок постеров, которые прихотят с ответом, не работают. Поставлена временная заглушка
+                        //result.poster_path,
+                        "https://i.ibb.co/Bf42WH6/900-600.jpg",
+                        result.genre_ids[0],
+                        result.release_date,
+                        0,
+                        result.id
+                    )
                 )
-            )
-
-            moviesViewModel.addMovie(
-                Movies(
-                    "Зеленая миля",
-                    "В тюрьме для смертников появляется заключенный с божественным даром. Мистическая драма по роману Стивена Кинга",
-                    4,
-                    "16+",
-                    "https://i.ibb.co/L1kdndM/2.jpg",
-                    5,
-                    "06.12.1999", 0,
-                    1
-                )
-            )
-
-            moviesViewModel.addMovie(
-                Movies(
-                    "Властелин колец: Братство Кольца",
-                    "Фродо Бэггинс отправляется спасать Средиземье. Первая часть культовой фэнтези-трилогии Питера Джексона",
-                    4,
-                    "12+",
-                    "https://i.ibb.co/tZDXdTy/5.jpg",
-                    7,
-                    "10.12.2001", 0,
-                    2
-                )
-            )
-
-            moviesViewModel.addMovie(
-                Movies(
-                    "Властелин колец: Две крепости",
-                    "Голлум ведет хоббитов в Мордор, а великие армии готовятся к битве. Вторая часть трилогии, два «Оскара»",
-                    4,
-                    "12+",
-                    "https://i.ibb.co/C7F7JSm/4.jpg",
-                    7,
-                    "05.12.2002", 0,
-                    3
-                )
-            )
-
-            moviesViewModel.addMovie(
-                Movies(
-                    "Властелин колец: Возвращение короля",
-                    "Арагорн штурмует Мордор, а Фродо устал бороться с чарами кольца. Эффектный финал саги, собравший 11 «Оскаров»",
-                    4,
-                    "12+",
-                    "https://i.ibb.co/qBXqfkx/e-HHH8t3-C1k-ZEUy8t-YQYo-Sn-Uy-Cfrkb-Xwhrayv9cb4b-XZd-V1moys-P795sco-HITll-bk-KVFKmo-Tn8-ZN6-xk-TKPj.jpg",
-                    7,
-                    "01.12.2003", 0,
-                    4
-                )
-            )
-
-            moviesViewModel.addMovie(
-                Movies(
-                    "Интерстеллар",
-                    "Фантастический эпос про задыхающуюся Землю, космические полеты и парадоксы времени.",
-                    4,
-                    "16+",
-                    "https://i.ibb.co/JrqXwxX/6.jpg",
-                    16,
-                    "26.10.2014", 0,
-                    5
-                )
-            )
-
-            moviesViewModel.addMovie(
-                Movies(
-                    "Форрест Гамп",
-                    "Полувековая история США глазами чудака из Алабамы. Абсолютная классика Роберта Земекиса с Томом Хэнксом",
-                    4,
-                    "12+",
-                    "https://i.ibb.co/7WmKX6D/7.jpg",
-                    5,
-                    "23.06.1994", 0,
-                    6
-                )
-            )
-
-            moviesViewModel.addMovie(
-                Movies(
-                    "Иван Васильевич меняет профессию",
-                    "Иван Грозный отвечает на телефон, пока его тезка-пенсионер сидит на троне. Советский хит о липовом государе",
-                    4,
-                    "6+",
-                    "https://i.ibb.co/pnggLdb/8.jpg",
-                    3,
-                    "17.09.1973", 0,
-                    7
-                )
-            )
-
-            moviesViewModel.addMovie(
-                Movies(
-                    "Список Шиндлера",
-                    "История немецкого промышленника, спасшего тысячи жизней во время Холокоста. Драма Стивена Спилберга",
-                    4,
-                    "16+",
-                    "https://i.ibb.co/dL6Rd9G/9.jpg",
-                    5,
-                    "30.11.1993", 0,
-                    8
-                )
-            )
-
-            moviesViewModel.addMovie(
-                Movies(
-                    "Король Лев",
-                    "Львенок Симба бросает вызов дяде-убийце. Величественный саундтрек, рисованная анимация и шекспировский размах",
-                    4,
-                    "0+",
-                    "https://i.ibb.co/nz1ZgKV/10.jpg",
-                    5,
-                    "12.06.1994", 0,
-                    9
-                )
-            )
+            }
         }
     }
 
+    private fun addGenresDBList(
+        genresViewModel: GenresViewModel,
+        downloads: Boolean,
+        genresDB: GenresDB
+    ) {
+        if (downloads) {
+            genresViewModel.deleteAllGenres()
+            for (genre in genresDB.genres) {
+                genresViewModel.addProfile(
+                    Genres(
+                        genre.name,
+                        genre.id
+                    )
+                )
+            }
+        }
+    }
+
+    private fun getMoviesDB() {
+        val api: ApiRequests = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ApiRequests::class.java)
+
+        GlobalScope.launch(Dispatchers.IO) {
+            val response = api.getMovieFacts().awaitResponse()
+            if (response.isSuccessful) {
+                val data = response.body()!!
+                moviesDB = response.body()!!
+                Log.d(TAG_PROFILE, data.total_results.toString())
+
+            }
+        }
+    }
+
+    private fun getGenresDB() {
+        val api: ApiRequests = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ApiRequests::class.java)
+
+        GlobalScope.launch(Dispatchers.IO) {
+            val response = api.getGenresDBList().awaitResponse()
+            if (response.isSuccessful) {
+                val data = response.body()!!
+                genresDB = response.body()!!
+                Log.d(TAG_PROFILE, data.genres[0].name)
+
+            }
+        }
+    }
     override fun onDestroy() {
         super.onDestroy()
         this.job.cancel()

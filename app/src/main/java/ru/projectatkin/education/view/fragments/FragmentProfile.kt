@@ -14,8 +14,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 import ru.projectatkin.education.ModelAndData.data.lowercase.Profile.Profile
-import ru.projectatkin.education.ViewModels.ProfileViewModel
 import ru.projectatkin.education.R
+import ru.projectatkin.education.ViewModels.ProfileViewModel
 
 const val TAG_PROFILE = "ProfileFragment"
 
@@ -23,6 +23,7 @@ class FragmentProfile : Fragment() {
     private lateinit var bottomNavigationBar: BottomNavigationView
     private var profileId = 0
     private lateinit var profileViewModel: ProfileViewModel
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -80,7 +81,9 @@ class FragmentProfile : Fragment() {
         email: String,
         telephone: String
     ): Boolean {
-        return !(TextUtils.isEmpty(name) && TextUtils.isEmpty(surname) && TextUtils.isEmpty(password) && TextUtils.isEmpty(email) && TextUtils.isEmpty(
+        return !(TextUtils.isEmpty(name) && TextUtils.isEmpty(surname) && TextUtils.isEmpty(password) && TextUtils.isEmpty(
+            email
+        ) && TextUtils.isEmpty(
             telephone
         ))
     }
