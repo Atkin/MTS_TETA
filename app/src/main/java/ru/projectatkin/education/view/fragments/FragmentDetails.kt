@@ -53,7 +53,6 @@ class FragmentDetails() : Fragment(), CellClickListener {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_details, container, false)
 
-
         this.movieImage = view.findViewById(R.id.movie_main_image)
         this.movieGenre = view.findViewById(R.id.movie_genre_text)
         this.movieDate = view.findViewById(R.id.movie_date)
