@@ -23,6 +23,7 @@ import retrofit2.Retrofit
 import retrofit2.awaitResponse
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.projectatkin.education.*
+import ru.projectatkin.education.ModelAndData.data.lowercase.Actors.Actors
 import ru.projectatkin.education.ModelAndData.data.lowercase.Genre.Genres
 import ru.projectatkin.education.ModelAndData.data.lowercase.Movies.Movies
 import ru.projectatkin.education.ModelAndData.data.lowercase.Retrofit.Interface.ApiRequests
@@ -60,7 +61,6 @@ class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, Coro
 
     private lateinit var moviesDB: MovieDB
     private lateinit var genresDB: GenresDB
-
 
     companion object {
         const val NOTIFICATION_ID = 101
@@ -196,12 +196,11 @@ class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, Coro
                     Movies(
                         result.original_title,
                         result.overview,
-                        ((result.vote_average)/2).toInt(),
+                        ((result.vote_average) / 2).toInt(),
                         "12+",
-                        if(isValidUrl(result.poster_path)) {
+                        if (isValidUrl(result.poster_path)) {
                             result.poster_path
-                        }
-                        else {
+                        } else {
                             "https://i.ibb.co/Bf42WH6/900-600.jpg"
                         },
                         result.genre_ids[0],
@@ -250,6 +249,35 @@ class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, Coro
         }
     }
 
+    private fun getActorsDB(moviesId: Int) {
+        val api: ApiRequests = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ApiRequests::class.java)
+
+        GlobalScope.launch(Dispatchers.IO) {
+            val response = api.getActorsDBList(moviesId).awaitResponse()
+            if (response.isSuccessful) {
+                actorsViewModel.deleteAllActors()
+                for (actor in response.body()!!.cast) {
+                    actorsViewModel.addActor(
+                        Actors(
+                            actor.name,
+                            if (isValidUrl(actor.profile_path)) {
+                                actor.profile_path
+                            } else {
+                                "https://i.ibb.co/8D2gJn6/2.jpg"
+                            },
+                            actor.id
+                        )
+                    )
+
+                }
+            }
+        }
+    }
+
     private fun getGenresDB() {
         val api: ApiRequests = Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -267,6 +295,7 @@ class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, Coro
             }
         }
     }
+
     override fun onDestroy() {
         super.onDestroy()
         this.job.cancel()
@@ -282,9 +311,11 @@ class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, Coro
         outState.putBoolean("downloaded", downloadStatus)
     }
 
-    override fun onCellClickListener(title: String?) {
+    override fun onCellClickListener(title: String?, moviesId: Int?) {
+        getActorsDB(moviesId!!)
         val bundle = Bundle()
         bundle.putInt("position", title!!.toInt())
+        bundle.putInt("moviesId", moviesId!!)
         bundle.putBoolean("downloaded", downloadStatus)
         findNavController().navigate(R.id.action_fragmentHome_to_fragmentDetails, bundle)
     }
@@ -293,9 +324,11 @@ class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, Coro
         Log.d(TAG_HOME, "Empty")
     }
 
-    fun isValidUrl(url: String): Boolean {
-        val p = Patterns.WEB_URL
-        val m = p.matcher(url)
-        return m.matches()
+    fun isValidUrl(url: String?): Boolean {
+        if(url != null) {
+            val p = Patterns.WEB_URL
+            val m = p.matcher(url)
+            return m.matches()
+        } else return  false
     }
 }

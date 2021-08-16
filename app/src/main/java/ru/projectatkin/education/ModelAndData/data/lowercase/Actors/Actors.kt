@@ -10,8 +10,7 @@ data class Actors (
     var actorName: String,
     @ColumnInfo(name = "actor_url_photo")
     var actorURL: String,
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "actor_id")
     var actorId: Int,
-    @PrimaryKey(autoGenerate = true)
-    var id: Int
 )

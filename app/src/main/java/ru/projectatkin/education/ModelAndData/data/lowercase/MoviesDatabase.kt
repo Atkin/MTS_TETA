@@ -165,7 +165,6 @@ abstract class MoviesDatabase : RoomDatabase() {
                 Actors(
                     "Евгений Моргунов",
                     "https://i.ibb.co/K92rzch/1.jpg",
-                    0,
                     1
                 )
             )
@@ -174,7 +173,6 @@ abstract class MoviesDatabase : RoomDatabase() {
                 Actors(
                     "Юрий Никулин",
                     "https://i.ibb.co/8D2gJn6/2.jpg",
-                    0,
                     2
                 )
             )
@@ -183,7 +181,6 @@ abstract class MoviesDatabase : RoomDatabase() {
                 Actors(
                     "Георгий Вицин",
                     "https://i.ibb.co/nwN5xw5/3.jpg",
-                    0,
                     3
                 )
             )

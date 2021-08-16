@@ -49,6 +49,7 @@ class FragmentProfile : Fragment() {
             true
         }
 
+
         view.account_exit_button.setOnClickListener {
             addDataToDatabase()
             activity?.onBackPressed()
