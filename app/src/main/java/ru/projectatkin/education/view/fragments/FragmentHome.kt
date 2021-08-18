@@ -38,6 +38,8 @@ import java.util.*
 
 const val TAG_HOME = "HomeFragment"
 const val BASE_URL = "https://api.themoviedb.org"
+const val BASE_POSTER_URL = "https://image.tmdb.org/t/p/original"
+const val BASE_ACTOR_URL = "https://image.tmdb.org/t/p/w500"
 
 
 class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, CoroutineScope {
@@ -198,8 +200,8 @@ class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, Coro
                         result.overview,
                         ((result.vote_average) / 2).toInt(),
                         "12+",
-                        if (isValidUrl(result.poster_path)) {
-                            result.poster_path
+                        if (isValidUrl(BASE_POSTER_URL+result.poster_path)) {
+                            BASE_POSTER_URL+result.poster_path
                         } else {
                             "https://i.ibb.co/Bf42WH6/900-600.jpg"
                         },
@@ -264,8 +266,8 @@ class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, Coro
                     actorsViewModel.addActor(
                         Actors(
                             actor.name,
-                            if (isValidUrl(actor.profile_path)) {
-                                actor.profile_path
+                            if (isValidUrl(BASE_ACTOR_URL+actor.profile_path)) {
+                                BASE_ACTOR_URL+actor.profile_path
                             } else {
                                 "https://i.ibb.co/8D2gJn6/2.jpg"
                             },
@@ -330,5 +332,18 @@ class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, Coro
             val m = p.matcher(url)
             return m.matches()
         } else return  false
+    }
+
+    fun parsingUrl(imageUrl: String): String {
+       // if(imageUrl!=null) {
+            var var1 = "https://image.tmdb.org/t/p/original"
+        //    var var2 = ""
+        //    for (index in 26..imageUrl.length - 1) {
+        //        var2 += imageUrl[index]
+        //    }
+            return var1 + imageUrl
+       // } else {
+       //     return ""
+       // }
     }
 }
