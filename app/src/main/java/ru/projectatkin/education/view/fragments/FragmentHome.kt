@@ -80,7 +80,6 @@ class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, Coro
         moviesViewModel = ViewModelProvider(this).get(MoviesViewModel::class.java)
         genresViewModel = ViewModelProvider(this).get(GenresViewModel::class.java)
 
-
         getMoviesDB()
         getGenresDB()
 
@@ -191,26 +190,56 @@ class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, Coro
         downloads: Boolean,
         moviesDB: MovieDB
     ) {
+        //ageFinal = getAge(ageDB)
         if (downloads) {
             moviesViewModel.deleteAllMovies()
             for (result in moviesDB.results) {
-                moviesViewModel.addMovie(
-                    Movies(
-                        result.original_title,
-                        result.overview,
-                        ((result.vote_average) / 2).toInt(),
-                        "12+",
-                        if (isValidUrl(BASE_POSTER_URL+result.poster_path)) {
-                            BASE_POSTER_URL+result.poster_path
-                        } else {
-                            "https://i.ibb.co/Bf42WH6/900-600.jpg"
-                        },
-                        result.genre_ids[0],
-                        result.release_date,
-                        0,
-                        result.id
-                    )
-                )
+                val api: ApiRequests = Retrofit.Builder()
+                    .baseUrl(BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+                    .create(ApiRequests::class.java)
+
+                GlobalScope.launch(Dispatchers.IO) {
+                    val response = api.getAgeRequest(result.id).awaitResponse()
+                    if (response.isSuccessful) {
+                        var age = response.body()!!
+                        var ageUs = ""
+                        var ageRu = ""
+                        var resultAge = "12+"
+                        for (ages in age.results) {
+                            if (ages.iso_3166_1 == "US") {
+                                ageUs = ages.release_dates[0].certification
+                            } else if (ages.iso_3166_1 == "RU") {
+                                ageRu = ages.release_dates[0].certification
+                            }
+                            if (ageRu != "") {
+                                resultAge = ageRu
+                            } else {
+                                resultAge = ageUs
+                            }
+                        }
+                        moviesViewModel.addMovie(
+                            Movies(
+                                result.original_title,
+                                result.overview,
+                                ((result.vote_average) / 2).toInt(),
+                                resultAge,
+                                if (isValidUrl(BASE_POSTER_URL + result.poster_path)) {
+                                    BASE_POSTER_URL + result.poster_path
+                                } else {
+                                    "https://i.ibb.co/Bf42WH6/900-600.jpg"
+                                },
+                                result.genre_ids[0],
+                                result.release_date,
+                                0,
+                                result.id
+                            )
+                        )
+                    }
+
+                }
+
             }
         }
     }
@@ -266,8 +295,8 @@ class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, Coro
                     actorsViewModel.addActor(
                         Actors(
                             actor.name,
-                            if (isValidUrl(BASE_ACTOR_URL+actor.profile_path)) {
-                                BASE_ACTOR_URL+actor.profile_path
+                            if (isValidUrl(BASE_ACTOR_URL + actor.profile_path)) {
+                                BASE_ACTOR_URL + actor.profile_path
                             } else {
                                 "https://i.ibb.co/8D2gJn6/2.jpg"
                             },
@@ -327,23 +356,10 @@ class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, Coro
     }
 
     fun isValidUrl(url: String?): Boolean {
-        if(url != null) {
+        if (url != null) {
             val p = Patterns.WEB_URL
             val m = p.matcher(url)
             return m.matches()
-        } else return  false
-    }
-
-    fun parsingUrl(imageUrl: String): String {
-       // if(imageUrl!=null) {
-            var var1 = "https://image.tmdb.org/t/p/original"
-        //    var var2 = ""
-        //    for (index in 26..imageUrl.length - 1) {
-        //        var2 += imageUrl[index]
-        //    }
-            return var1 + imageUrl
-       // } else {
-       //     return ""
-       // }
+        } else return false
     }
 }

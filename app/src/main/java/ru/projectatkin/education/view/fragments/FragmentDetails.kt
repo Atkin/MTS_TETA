@@ -43,7 +43,7 @@ class FragmentDetails() : Fragment(), CellClickListener {
     private lateinit var moviesViewModel: MoviesViewModel
     lateinit var actorsAdapter: MovieActorAdapter
 
-    private lateinit var  actorsRecyclerView: RecyclerView
+    private lateinit var actorsRecyclerView: RecyclerView
     private lateinit var actorsViewModel: ActorsViewModel
 
     override fun onCreateView(
@@ -67,7 +67,6 @@ class FragmentDetails() : Fragment(), CellClickListener {
 
         val position = arguments?.getInt("position")
 
-
         moviesViewModel = ViewModelProvider(this).get(MoviesViewModel::class.java)
         actorsViewModel = ViewModelProvider(this).get(ActorsViewModel::class.java)
 
@@ -77,15 +76,16 @@ class FragmentDetails() : Fragment(), CellClickListener {
 
         movieAdapter = MovieRecyclerAdapter(this)
 
-        actorsRecyclerView.layoutManager = GridLayoutManager(activity, 1, RecyclerView.HORIZONTAL, false)
+        actorsRecyclerView.layoutManager =
+            GridLayoutManager(activity, 1, RecyclerView.HORIZONTAL, false)
 
-        actorsViewModel.readAllData.observe(viewLifecycleOwner, Observer {words ->
+        actorsViewModel.readAllData.observe(viewLifecycleOwner, Observer { words ->
             words?.let {
                 actorsAdapter.updateActorsList(it)
             }
         })
 
-        moviesViewModel.readMovie.observe(viewLifecycleOwner, Observer {words ->
+        moviesViewModel.readMovie.observe(viewLifecycleOwner, Observer { words ->
             words?.let {
                 movieAdapter.updateMoviesAndGenreList(it)
             }
@@ -120,7 +120,8 @@ class FragmentDetails() : Fragment(), CellClickListener {
 
     private fun updateUI(movie: MoviesAndGenres) {
         movieImage.load(movie.imageUrl ?: "https://i.ibb.co/Bf42WH6/900-600.jpg")
-        movieAge.text = movie.ageRestriction ?: "99+"
+        if (movie.ageRestriction == "")
+            movieAge.text = movie.ageRestriction ?: "99+"
         movieTitle.text = movie.title ?: "Фильму быть!"
         movieDescription.text = movie.description
             ?: "Здесь должно быть описание фильма. Возможно, когда-нибудь оно будет. Оставайтесь с нами"
@@ -183,4 +184,5 @@ class FragmentDetails() : Fragment(), CellClickListener {
     override fun onCellClickListener(position: String?, moviesId: Int?) {
         Log.d(TAG_DETAILS, "Empty")
     }
+
 }
