@@ -190,7 +190,6 @@ class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, Coro
         downloads: Boolean,
         moviesDB: MovieDB
     ) {
-        //ageFinal = getAge(ageDB)
         if (downloads) {
             moviesViewModel.deleteAllMovies()
             for (result in moviesDB.results) {
@@ -213,18 +212,22 @@ class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, Coro
                             } else if (ages.iso_3166_1 == "RU") {
                                 ageRu = ages.release_dates[0].certification
                             }
+                        }
                             if (ageRu != "") {
                                 resultAge = ageRu
                             } else {
                                 resultAge = ageUs
                             }
-                        }
+
+                        //resultAge = ageUs
                         moviesViewModel.addMovie(
                             Movies(
                                 result.original_title,
                                 result.overview,
                                 ((result.vote_average) / 2).toInt(),
-                                resultAge,
+                                if (resultAge != "")
+                                    resultAge
+                                else "12+",
                                 if (isValidUrl(BASE_POSTER_URL + result.poster_path)) {
                                     BASE_POSTER_URL + result.poster_path
                                 } else {

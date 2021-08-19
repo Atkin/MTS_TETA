@@ -120,8 +120,7 @@ class FragmentDetails() : Fragment(), CellClickListener {
 
     private fun updateUI(movie: MoviesAndGenres) {
         movieImage.load(movie.imageUrl ?: "https://i.ibb.co/Bf42WH6/900-600.jpg")
-        if (movie.ageRestriction == "")
-            movieAge.text = movie.ageRestriction ?: "99+"
+        movieAge.text = movie.ageRestriction ?: "99+"
         movieTitle.text = movie.title ?: "Фильму быть!"
         movieDescription.text = movie.description
             ?: "Здесь должно быть описание фильма. Возможно, когда-нибудь оно будет. Оставайтесь с нами"
