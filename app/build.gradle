@@ -47,6 +47,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-messaging-ktx:22.0.0'
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.work:work-runtime-ktx:2.5.0'
 
     testImplementation('junit:junit:4.13.2')
     testImplementation "io.mockk:mockk:1.11.0"
@@ -93,4 +94,8 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.12.0'
 
+    //workmanager
+    def work_version = "2.5.0"
+    //Kotlin+coroutines
+    implementation "androidx.work:work-runtime-ktx:$work_version"
 }

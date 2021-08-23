@@ -7,20 +7,17 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.projectatkin.education.ModelAndData.data.lowercase.Movies.Movies
-import ru.projectatkin.education.ModelAndData.data.lowercase.Movies.MoviesAndGenres
 import ru.projectatkin.education.ModelAndData.data.lowercase.Movies.MoviesRepository
 import ru.projectatkin.education.ModelAndData.data.lowercase.MoviesDatabase
 
 class MoviesViewModel(application: Application) : AndroidViewModel(application) {
     val readAllData: LiveData<List<Movies>>
     private val repository: MoviesRepository
-    lateinit var readMovie: LiveData<List<MoviesAndGenres>>
 
     init {
         val moviesDao = MoviesDatabase.getInstance(application).moviesDao()
         repository = MoviesRepository(moviesDao)
         readAllData = repository.readAllData
-        readMovie = repository.readMovie
     }
 
     fun addMovie(movies: Movies) {
@@ -39,12 +36,6 @@ class MoviesViewModel(application: Application) : AndroidViewModel(application) 
     fun deleteAllMovies() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteAllMovies()
-        }
-    }
-
-    fun loadMovie() {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.getMovie()
         }
     }
 }
