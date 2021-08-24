@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 }
 
 interface CellClickListener {
-    fun onCellClickListener(title: String?)
+    fun onCellClickListener(title: String?, movieId: Int?)
 }
 
 interface CellClickListenerGenre {

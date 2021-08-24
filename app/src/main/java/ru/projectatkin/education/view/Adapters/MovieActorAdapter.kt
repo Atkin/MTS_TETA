@@ -7,9 +7,9 @@ import ru.projectatkin.education.ModelAndData.data.lowercase.Actors.Actors
 import ru.projectatkin.education.R
 import ru.projectatkin.education.view.ViewHolders.MovieActorViewHolder
 
-class MovieActorAdapter(
-    private var actors: List<Actors>
-) : RecyclerView.Adapter<MovieActorViewHolder>() {
+class MovieActorAdapter() : RecyclerView.Adapter<MovieActorViewHolder>() {
+    private var actors: List<Actors> = emptyList()
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieActorViewHolder {
         val itemView =
@@ -24,5 +24,10 @@ class MovieActorAdapter(
 
     override fun getItemCount(): Int {
         return actors.size
+    }
+
+    fun updateActorsList(newActors: List<Actors>) {
+        this.actors = newActors
+        notifyDataSetChanged()
     }
 }

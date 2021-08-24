@@ -17,8 +17,9 @@ import coil.load
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ru.projectatkin.education.CellClickListener
 import ru.projectatkin.education.ModelAndData.data.lowercase.Movies.MoviesAndGenres
-import ru.projectatkin.education.ViewModels.MoviesViewModel
 import ru.projectatkin.education.R
+import ru.projectatkin.education.ViewModels.ActorsViewModel
+import ru.projectatkin.education.ViewModels.MoviesViewModel
 import ru.projectatkin.education.view.Adapters.MovieActorAdapter
 import ru.projectatkin.education.view.Adapters.MovieRecyclerAdapter
 
@@ -40,7 +41,10 @@ class FragmentDetails() : Fragment(), CellClickListener {
 
     private lateinit var movieAdapter: MovieRecyclerAdapter
     private lateinit var moviesViewModel: MoviesViewModel
-    lateinit var adapter: MovieActorAdapter
+    lateinit var actorsAdapter: MovieActorAdapter
+
+    private lateinit var actorsRecyclerView: RecyclerView
+    private lateinit var actorsViewModel: ActorsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,6 +52,7 @@ class FragmentDetails() : Fragment(), CellClickListener {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_details, container, false)
+
         this.movieImage = view.findViewById(R.id.movie_main_image)
         this.movieGenre = view.findViewById(R.id.movie_genre_text)
         this.movieDate = view.findViewById(R.id.movie_date)
@@ -63,19 +68,28 @@ class FragmentDetails() : Fragment(), CellClickListener {
         val position = arguments?.getInt("position")
 
         moviesViewModel = ViewModelProvider(this).get(MoviesViewModel::class.java)
+        actorsViewModel = ViewModelProvider(this).get(ActorsViewModel::class.java)
 
-        val recyclerView: RecyclerView = view.findViewById(R.id.actor_recyclerview)
+        actorsRecyclerView = view.findViewById(R.id.actor_recyclerview)
+        actorsAdapter = MovieActorAdapter()
+        actorsRecyclerView.adapter = actorsAdapter
 
         movieAdapter = MovieRecyclerAdapter(this)
 
-        moviesViewModel.readMovie.observe(viewLifecycleOwner, Observer {words ->
+        actorsRecyclerView.layoutManager =
+            GridLayoutManager(activity, 1, RecyclerView.HORIZONTAL, false)
+
+        actorsViewModel.readAllData.observe(viewLifecycleOwner, Observer { words ->
+            words?.let {
+                actorsAdapter.updateActorsList(it)
+            }
+        })
+
+        moviesViewModel.readMovie.observe(viewLifecycleOwner, Observer { words ->
             words?.let {
                 movieAdapter.updateMoviesAndGenreList(it)
             }
             updateUI(words[position!!])
-            adapter = MovieActorAdapter(words[position!!].actorsList)
-            recyclerView.adapter = adapter
-            recyclerView.layoutManager = GridLayoutManager(activity, 1, RecyclerView.HORIZONTAL, false)
         })
 
         bottomNavigationBar = view.findViewById(R.id.list_bottom_navigation_details)
@@ -166,7 +180,8 @@ class FragmentDetails() : Fragment(), CellClickListener {
         }
     }
 
-    override fun onCellClickListener(position: String?) {
+    override fun onCellClickListener(position: String?, moviesId: Int?) {
         Log.d(TAG_DETAILS, "Empty")
     }
+
 }

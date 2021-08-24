@@ -2,7 +2,6 @@ package ru.projectatkin.education.ModelAndData.data.lowercase.Movies
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import ru.projectatkin.education.ModelAndData.data.lowercase.Actors.Actors
 
 
 @Dao
@@ -44,6 +43,6 @@ data class MoviesAndGenres(
     var genreTitle: String,
     @ColumnInfo(name = "movie_actor_id")
     var actorId: Int,
-    @Relation(parentColumn = "movie_actor_id", entityColumn = "actor_id")
-    var actorsList: List<Actors>
+    //@Relation(parentColumn = "movie_actor_id", entityColumn = "actor_id")
+    //var actorsList: List<Actors>
 )
