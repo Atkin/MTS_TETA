@@ -27,7 +27,7 @@ class MovieItemOffsetDecoration(
                     (column + 1) * spacing / spanCount
 
                 if (position < spanCount) {
-                    outRect.top = spacing;
+                    outRect.top = spacing
                 }
                 outRect.bottom = spacing
             } else {

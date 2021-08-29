@@ -2,6 +2,9 @@ package ru.projectatkin.education.view.Adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ru.projectatkin.education.CellClickListener
 import ru.projectatkin.education.ModelAndData.data.lowercase.Movies.Movies
@@ -23,7 +26,11 @@ class MovieRecyclerAdapter(
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         holder.bind(movies[position])
         holder.movieLayout?.setOnClickListener {
-            cellClickListener.onCellClickListener(position, movies[position].moviesId, movies[position].genreId)
+            cellClickListener.onCellClickListener(
+                position,
+                movies[position].moviesId,
+                movies[position].genreId
+            )
         }
     }
 

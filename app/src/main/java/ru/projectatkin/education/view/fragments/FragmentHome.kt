@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.work.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.item_movie.*
 import kotlinx.coroutines.*
 import retrofit2.Retrofit
 import retrofit2.awaitResponse
@@ -41,7 +42,6 @@ const val TAG_HOME = "HomeFragment"
 const val BASE_URL = "https://api.themoviedb.org"
 const val BASE_POSTER_URL = "https://image.tmdb.org/t/p/original"
 const val BASE_ACTOR_URL = "https://image.tmdb.org/t/p/w500"
-
 
 class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, CoroutineScope {
     private lateinit var bottomNavigationBar: BottomNavigationView
@@ -312,6 +312,8 @@ class FragmentHome : Fragment(), CellClickListener, CellClickListenerGenre, Coro
         bundle.putInt("moviesId", moviesId!!)
         bundle.putBoolean("downloaded", downloadStatus)
         bundle.putString("genre", sharedPreference.getGenre(genresId.toString(), "GENRE"))
+        //root_movie.transitionToEnd()
+
         findNavController().navigate(R.id.action_fragmentHome_to_fragmentDetails, bundle)
     }
 

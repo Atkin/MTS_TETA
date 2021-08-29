@@ -36,6 +36,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewMovieGenre"
+        android:layoutAnimation="@anim/layout_animation_up_to_down"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/main_side_offset_20"
@@ -63,7 +64,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewMovie"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/main_side_offset_20"
             android:layout_marginBottom="@dimen/main_side_offset_90"
             android:clipToPadding="false"

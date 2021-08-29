@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.fragment_details.*
 import ru.projectatkin.education.CellClickListener
 import ru.projectatkin.education.ModelAndData.data.lowercase.Movies.Movies
 import ru.projectatkin.education.R
@@ -102,10 +103,7 @@ class FragmentDetails() : Fragment(), CellClickListener {
                     findNavController().navigate(R.id.action_fragmentDetails_to_fragmentHome, null)
                 }
                 R.id.list_profile_button -> {
-                    findNavController().navigate(
-                        R.id.action_fragmentDetails_to_fragmentProfile,
-                        null
-                    )
+                     findNavController().navigate(R.id.action_fragmentDetails_to_fragmentProfile, null)
                 }
                 else -> {
                 }

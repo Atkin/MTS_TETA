@@ -11,9 +11,17 @@
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_fragmentHome_to_fragmentDetails"
+            app:enterAnim="@xml/slide_left"
+            app:exitAnim="@xml/wait_anim"
+            app:popEnterAnim="@xml/wait_anim"
+            app:popExitAnim="@xml/slide_right"
             app:destination="@id/fragmentDetails" />
         <action
             android:id="@+id/action_fragmentHome_to_fragmentProfile"
+            app:enterAnim="@xml/slide_left"
+            app:exitAnim="@xml/wait_anim"
+            app:popEnterAnim="@xml/wait_anim"
+            app:popExitAnim="@xml/slide_right"
             app:destination="@id/fragmentProfile" />
     </fragment>
     <fragment
@@ -22,9 +30,17 @@
         android:label="FragmentDetails" >
         <action
             android:id="@+id/action_fragmentDetails_to_fragmentProfile"
+            app:enterAnim="@xml/slide_left"
+            app:exitAnim="@xml/wait_anim"
+            app:popEnterAnim="@xml/wait_anim"
+            app:popExitAnim="@xml/slide_right"
             app:destination="@id/fragmentProfile" />
         <action
             android:id="@+id/action_fragmentDetails_to_fragmentHome"
+            app:enterAnim="@xml/slide_right"
+            app:exitAnim="@xml/wait_anim"
+            app:popEnterAnim="@xml/wait_anim"
+            app:popExitAnim="@xml/slide_left"
             app:destination="@id/fragmentHome" />
     </fragment>
     <fragment
@@ -33,6 +49,10 @@
         android:label="FragmentProfile" >
         <action
             android:id="@+id/action_fragmentProfile_to_fragmentHome"
+            app:enterAnim="@xml/slide_right"
+            app:exitAnim="@xml/wait_anim"
+            app:popEnterAnim="@xml/wait_anim"
+            app:popExitAnim="@xml/slide_left"
             app:destination="@id/fragmentHome" />
     </fragment>
 </navigation>
