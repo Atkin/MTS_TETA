@@ -52,27 +52,17 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="98dp">
 
-
-        <!-- Movie genre frame -->
-        <ImageView
-            android:id="@+id/movie_genre_frame"
-            android:layout_width="58dp"
-            android:layout_height="17dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="35dp"
-            android:background="@mipmap/ic_movie_genre_frame"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <!-- Movie genre text -->
         <TextView
             android:id="@+id/movie_genre_text"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/main_side_offset_80"
             android:layout_height="wrap_content"
+            android:background="@mipmap/ic_genre"
+            android:gravity="center"
+            android:textAppearance="@style/movie_genre_style"
             android:layout_marginStart="27dp"
             android:layout_marginTop="35dp"
             android:text="@string/movie_genre_text"
-            android:textAppearance="@style/movie_genre_style"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -81,11 +71,11 @@
             android:id="@+id/movie_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="35dp"
             android:text="@string/movie_date"
             android:textAppearance="@style/movie_date_style"
-            app:layout_constraintStart_toEndOf="@id/movie_genre_frame"
+            app:layout_constraintStart_toEndOf="@id/movie_genre_text"
             app:layout_constraintTop_toTopOf="parent" />
 
         <!-- Age limit frame -->

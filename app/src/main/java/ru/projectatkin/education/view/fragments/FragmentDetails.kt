@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ru.projectatkin.education.CellClickListener
-import ru.projectatkin.education.ModelAndData.data.lowercase.Movies.MoviesAndGenres
+import ru.projectatkin.education.ModelAndData.data.lowercase.Movies.Movies
 import ru.projectatkin.education.R
 import ru.projectatkin.education.ViewModels.ActorsViewModel
 import ru.projectatkin.education.ViewModels.MoviesViewModel
@@ -46,6 +46,8 @@ class FragmentDetails() : Fragment(), CellClickListener {
     private lateinit var actorsRecyclerView: RecyclerView
     private lateinit var actorsViewModel: ActorsViewModel
 
+    private lateinit var genre: String
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -66,6 +68,7 @@ class FragmentDetails() : Fragment(), CellClickListener {
         raitingStar5 = view.findViewById(R.id.raiting_star_5)
 
         val position = arguments?.getInt("position")
+        genre = arguments?.getString("genre")!!
 
         moviesViewModel = ViewModelProvider(this).get(MoviesViewModel::class.java)
         actorsViewModel = ViewModelProvider(this).get(ActorsViewModel::class.java)
@@ -85,9 +88,9 @@ class FragmentDetails() : Fragment(), CellClickListener {
             }
         })
 
-        moviesViewModel.readMovie.observe(viewLifecycleOwner, Observer { words ->
+        moviesViewModel.readAllData.observe(viewLifecycleOwner, Observer { words ->
             words?.let {
-                movieAdapter.updateMoviesAndGenreList(it)
+                movieAdapter.updateMoviesList(it)
             }
             updateUI(words[position!!])
         })
@@ -118,13 +121,13 @@ class FragmentDetails() : Fragment(), CellClickListener {
         Log.d(TAG_DETAILS, "Destroy")
     }
 
-    private fun updateUI(movie: MoviesAndGenres) {
+    private fun updateUI(movie: Movies) {
         movieImage.load(movie.imageUrl ?: "https://i.ibb.co/Bf42WH6/900-600.jpg")
         movieAge.text = movie.ageRestriction ?: "99+"
         movieTitle.text = movie.title ?: "Фильму быть!"
         movieDescription.text = movie.description
             ?: "Здесь должно быть описание фильма. Возможно, когда-нибудь оно будет. Оставайтесь с нами"
-        movieGenre.text = movie.genreTitle ?: "Жанр"
+        movieGenre.text = genre ?: "Жанр"
         movieDate.text = movie.date ?: "00.00.1900"
 
         when (movie.rateScore) {
@@ -180,7 +183,7 @@ class FragmentDetails() : Fragment(), CellClickListener {
         }
     }
 
-    override fun onCellClickListener(position: String?, moviesId: Int?) {
+    override fun onCellClickListener(index: Int?, moviesId: Int?, genresId: Int?) {
         Log.d(TAG_DETAILS, "Empty")
     }
 

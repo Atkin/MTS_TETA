@@ -20,8 +20,6 @@ data class Movies(
     var genreId: Int?,
     @ColumnInfo(name = "movie_date")
     var date: String?,
-    @ColumnInfo(name = "movie_actor_id")
-    var actorId: Int,
     @PrimaryKey(autoGenerate = true)
     var moviesId: Int
 )

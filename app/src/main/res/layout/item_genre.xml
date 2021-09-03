@@ -11,7 +11,7 @@
         android:id="@+id/movie_genre_title"
         android:layout_width="@dimen/main_side_offset_80"
         android:layout_height="wrap_content"
-        android:background="@mipmap/ic_movie_genre_frame"
+        android:background="@mipmap/ic_genre"
         android:gravity="center"
         android:textAppearance="@style/movie_genre_style"
         app:layout_constraintStart_toStartOf="parent"

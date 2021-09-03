@@ -1,11 +1,18 @@
 package ru.projectatkin.education.ModelAndData.data.lowercase
 
 import android.content.Context
+import android.util.Log
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import retrofit2.Retrofit
+import retrofit2.awaitResponse
+import retrofit2.converter.gson.GsonConverterFactory
 import ru.projectatkin.education.ModelAndData.data.lowercase.Actors.Actors
 import ru.projectatkin.education.ModelAndData.data.lowercase.Actors.ActorsDao
 import ru.projectatkin.education.ModelAndData.data.lowercase.Genre.GenreDao
@@ -14,6 +21,10 @@ import ru.projectatkin.education.ModelAndData.data.lowercase.Movies.Movies
 import ru.projectatkin.education.ModelAndData.data.lowercase.Movies.MoviesDao
 import ru.projectatkin.education.ModelAndData.data.lowercase.Profile.Profile
 import ru.projectatkin.education.ModelAndData.data.lowercase.Profile.ProfileDao
+import ru.projectatkin.education.ModelAndData.data.lowercase.Retrofit.Interface.ApiRequests
+import ru.projectatkin.education.SharedPreference
+import ru.projectatkin.education.view.fragments.BASE_URL
+import ru.projectatkin.education.view.fragments.TAG_PROFILE
 
 @Database(
     entities = arrayOf(Movies::class, Profile::class, Genres::class, Actors::class),
@@ -57,108 +68,31 @@ abstract class MoviesDatabase : RoomDatabase() {
 
         private fun prepopulateDb(context: Context, db: MoviesDatabase) {
             //add default film genres
-            db.genresDao().insertDefault(
-                Genres(
-                    "Вестерн",
-                    0
-                )
-            )
-            db.genresDao().insertDefault(
-                Genres(
-                    "Боевик",
-                    1
-                )
-            )
-            db.genresDao().insertDefault(
-                Genres(
-                    "Мультик",
-                    2
-                )
-            )
-            db.genresDao().insertDefault(
-                Genres(
-                    "Комедия",
-                    3
-                )
-            )
-            db.genresDao().insertDefault(
-                Genres(
-                    "Криминал",
-                    4
-                )
-            )
-            db.genresDao().insertDefault(
-                Genres(
-                    "Драма",
-                    5
-                )
-            )
-            db.genresDao().insertDefault(
-                Genres(
-                    "Семейный",
-                    6
-                )
-            )
-            db.genresDao().insertDefault(
-                Genres(
-                    "Фентези",
-                    7
-                )
-            )
-            db.genresDao().insertDefault(
-                Genres(
-                    "Ужасы",
-                    8
-                )
-            )
-            db.genresDao().insertDefault(
-                Genres(
-                    "Музыка",
-                    9
-                )
-            )
-            db.genresDao().insertDefault(
-                Genres(
-                    "Мистика",
-                    10
-                )
-            )
-            db.genresDao().insertDefault(
-                Genres(
-                    "Триллер",
-                    11
-                )
-            )
-            db.genresDao().insertDefault(
-                Genres(
-                    "Военный",
-                    12
-                )
-            )
-            db.genresDao().insertDefault(
-                Genres(
-                    "Детский",
-                    13
-                )
-            )
-            db.genresDao().insertDefault(
-                Genres(
-                    "Докум.",
-                    14
-                )
-            )
-            db.genresDao().insertDefault(
-                Genres(
-                    "Мульт.",
-                    15
-                )
-            )
-            db.genresDao().insertDefault(
-                Genres(
-                    "Фантаст.",
-                    16
-                )
-            )
+            val api: ApiRequests = Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+                .create(ApiRequests::class.java)
+
+            GlobalScope.launch(Dispatchers.IO) {
+                val response = api.getGenresDBList().awaitResponse()
+                if (response.isSuccessful) {
+                    val data = response.body()!!
+                    Log.d(TAG_PROFILE, data.genres[0].name)
+                    var sharedPreference: SharedPreference
+                    sharedPreference = SharedPreference(context)
+                    for (genre in data.genres) {
+                        sharedPreference.saveGenre(genre.id.toString(), genre.name)
+                        db.genresDao().insertDefault(
+                            Genres(
+                                genre.name,
+                                genre.id
+                            )
+                        )
+                    }
+                }
+            }
+
 
             //Add default actors
             db.actorsDao().insertDefault(
@@ -185,6 +119,7 @@ abstract class MoviesDatabase : RoomDatabase() {
                 )
             )
 
+            val defaultGenres = listOf(1)
             //Add default Movies
             db.moviesDao().insertDefault(
                 Movies(
@@ -195,7 +130,7 @@ abstract class MoviesDatabase : RoomDatabase() {
                     "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/5JP9X5tCZ6qz7DYMabLmrQirlWh.jpg",
                     1,
                     "04.03.2021",
-                    0,
+
                     0
                 )
             )
@@ -208,7 +143,7 @@ abstract class MoviesDatabase : RoomDatabase() {
                     "18+",
                     "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/pMIixvHwsD5RZxbvgsDSNkpKy0R.jpg",
                     1,
-                    "08.04.2021", 0,
+                    "08.04.2021",
                     1
                 )
             )
@@ -221,7 +156,7 @@ abstract class MoviesDatabase : RoomDatabase() {
                     "6+",
                     "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/546RNYy9Wi5wgboQ7EtD6i0DY5D.jpg",
                     13,
-                    "29.04.202", 0,
+                    "29.04.202",
                     2
                 )
             )
@@ -234,7 +169,7 @@ abstract class MoviesDatabase : RoomDatabase() {
                     "12+",
                     "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/fq3DSw74fAodrbLiSv0BW1Ya4Ae.jpg",
                     5,
-                    "13.05.2021", 0,
+                    "13.05.2021",
                     3
                 )
             )
@@ -247,7 +182,7 @@ abstract class MoviesDatabase : RoomDatabase() {
                     "18+",
                     "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/5xXGQLVtTAExHY92DHD9ewGmKxf.jpg",
                     14,
-                    "29.04.2021", 0,
+                    "29.04.2021",
                     4
                 )
             )
@@ -260,7 +195,7 @@ abstract class MoviesDatabase : RoomDatabase() {
                     "0+",
                     "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/xltjMeLlxywym14NEizl0metO10.jpg",
                     15,
-                    "04.05.2021", 0,
+                    "04.05.2021",
                     5
                 )
             )
@@ -273,7 +208,7 @@ abstract class MoviesDatabase : RoomDatabase() {
                     "12+",
                     "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/hUfyYGP9Xf6cHF9y44JXJV3NxZM.jpg",
                     3,
-                    "03.06.2021", 0,
+                    "03.06.2021",
                     6
                 )
             )
@@ -286,7 +221,8 @@ abstract class MoviesDatabase : RoomDatabase() {
                     "16+",
                     "https://www.themoviedb.org/t/p/w600_and_h900_bestv2/mbtN6V6y5kdawvAkzqN4ohi576a.jpg",
                     1,
-                    "06.2021", 0, 7
+                    "06.2021",
+                    7
                 )
             )
         }
